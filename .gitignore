@@ -1,0 +1,12 @@
+vendor
+.vscode
+config/app.yml
+config/app-test.yml
+.env
+.tool-versions
+docs/index.yaml
+.DS_Store
+.pgsync.yml
+docker-compose.dev.yml
+certs/*
+!certs/.gitkeep

@@ -1,0 +1,13 @@
+linters:
+  disable-all: true
+  enable:
+    - deadcode
+    - errcheck
+    - govet
+    - ineffassign
+    - typecheck
+    - varcheck
+    - goimports
+    - unconvert
+    - misspell
+  fast: true
