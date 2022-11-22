@@ -1,4 +1,4 @@
-# Dcard assignment
+# Assignment
 
 Design and implement (with unit tests) an URL shortener using Go programming language.
 

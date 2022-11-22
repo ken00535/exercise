@@ -7,5 +7,9 @@ PROJ_NAME := assignment
 all:
 	source ./.env && go run ./cmd/server
 
+init:
+	@cp .env.dev .env
+	@cp ./config/app-dev.yml ./config/app.yml
+
 lint:
 	golangci-lint run
