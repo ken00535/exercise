@@ -13,13 +13,14 @@ import (
 	"strings"
 	"syscall"
 
-	dhttp "assignment/internal/app/delivery/http"
-	"assignment/internal/app/repository/db"
-	"assignment/internal/app/usecase"
-	"assignment/internal/infra/config"
-	"assignment/internal/infra/fxlogger"
-	wsgin "assignment/internal/infra/gin"
-	wszerolog "assignment/internal/infra/zerolog"
+	dhttp "shorten/internal/app/delivery/http"
+	"shorten/internal/app/repository/db"
+	"shorten/internal/app/usecase"
+	"shorten/internal/infra/config"
+	"shorten/internal/infra/fxlogger"
+	wsgin "shorten/internal/infra/gin"
+	"shorten/internal/infra/gorm"
+	wszerolog "shorten/internal/infra/zerolog"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/joho/godotenv/autoload"
@@ -32,7 +33,7 @@ var (
 )
 
 func main() {
-	config.Init("./config", "app")
+	config.Init()
 	cfg := config.Get()
 	wszerolog.Init(cfg.Log)
 
@@ -45,6 +46,7 @@ func main() {
 	app := fx.New(
 		fx.Supply(cfg),
 		fx.Provide(
+			gorm.New,
 			wsgin.New,
 			db.New,
 			usecase.New,

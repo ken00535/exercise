@@ -1,0 +1,13 @@
+version: "3"
+services:
+  # shorten:
+  #   container_name: "shorten"
+  #   image: "shorten"
+  #   build: .
+  #   ports:
+  #     - 80:80
+  postgres:
+    container_name: "postgres"
+    image: "postgres:15.1"
+    ports:
+      - 5432:5432

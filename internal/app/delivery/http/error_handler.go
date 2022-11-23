@@ -3,7 +3,7 @@ package http
 import (
 	"net/http"
 
-	"assignment/internal/app/entity"
+	"shorten/internal/app/entity"
 
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"

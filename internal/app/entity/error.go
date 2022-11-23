@@ -9,7 +9,7 @@ const (
 	ErrRuntimePanic            AppError = "runtime panic"
 	ErrInternal                AppError = "internal"
 	ErrUnauthorized            AppError = "unauthorized"
-	ErrTransactionNotCompleted AppError = "transation not completed"
+	ErrTransactionNotCompleted AppError = "transaction not completed"
 )
 
 type AppError string

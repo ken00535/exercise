@@ -1,14 +1,16 @@
 package config
 
 import (
-	"os"
+	"bytes"
 	"strings"
 
-	"assignment/internal/infra/gin"
-	"assignment/internal/infra/zerolog"
+	"shorten/internal/infra/gin"
+	"shorten/internal/infra/gorm"
+	"shorten/internal/infra/zerolog"
 
 	"github.com/spf13/viper"
 	"go.uber.org/fx"
+	"gopkg.in/yaml.v3"
 )
 
 var (
@@ -18,29 +20,20 @@ var (
 // Config is config instance
 type Config struct {
 	fx.Out
-	Http *gin.Config    `yaml:"http"`
-	Log  zerolog.Config `yaml:"log"`
+	Gorm gorm.Config    `yaml:"db" mapstructure:"db"`
+	Http gin.Config     `yaml:"http" mapstructure:"http"`
+	Log  zerolog.Config `yaml:"log" mapstructure:"log"`
 }
 
 // Init config singleton
-func Init(configPath, filename string) {
-	if path, find := os.LookupEnv("CONFIG_PATH"); find {
-		configPath = path
-	}
-	if name, find := os.LookupEnv("CONFIG_FILENAME"); find {
-		filename = name
-	}
+func Init() {
+	b, _ := yaml.Marshal(&Config{})
+	defaultConfig := bytes.NewReader(b)
+	viper.SetConfigType("yaml")
+	_ = viper.MergeConfig(defaultConfig)
 	viper.AutomaticEnv()
 	viper.SetEnvPrefix("")
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
-
-	viper.AddConfigPath(configPath)
-	viper.SetConfigName(filename)
-	viper.SetConfigType("yaml")
-
-	if err := viper.ReadInConfig(); err != nil {
-		panic(err)
-	}
 
 	if err := viper.Unmarshal(&_cfg); err != nil {
 		panic(err)

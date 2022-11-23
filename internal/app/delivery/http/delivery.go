@@ -1,10 +1,10 @@
 package http
 
 import (
-	"assignment/internal/app/entity"
-	"context"
 	"net/http"
 	"time"
+
+	"shorten/internal/app/entity"
 
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
@@ -38,7 +38,7 @@ func (d *Delivery) UploadUrl(c *gin.Context) {
 		_ = c.Error(errors.Wrap(entity.ErrInvalidInput, err.Error()))
 		return
 	}
-	url, err := d.usecase.UploadUrl(context.Background(), req.Url, req.ExpireAt)
+	url, err := d.usecase.UploadUrl(c, req.Url, req.ExpireAt)
 	if err != nil {
 		_ = c.Error(err)
 		return

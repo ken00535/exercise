@@ -1,12 +1,26 @@
-# Assignment
+# Shorten
 
 Design and implement (with unit tests) an URL shortener using Go programming language.
 
+## Technical Selection
+
+**gorm**
+
+**gin**
+
+**fx**
+
+**zerolog**
+
+
+
 ## Getting start
 
+### Prerequisite
 
 
-## Criteria
+
+## Requirement
 
 1. URL shortener has 2 APIs, please follow API example to implement:
     1. A RESTful API to upload a URL with its expired date and response with a shorten URL.

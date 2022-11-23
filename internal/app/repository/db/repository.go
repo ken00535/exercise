@@ -2,12 +2,30 @@
 package db
 
 import (
-	"assignment/internal/app/entity"
+	"context"
+	"shorten/internal/app/entity"
+
+	"github.com/jinzhu/copier"
+	"github.com/pkg/errors"
+	"gorm.io/gorm"
 )
 
-type repository struct{}
+type repository struct {
+	db *gorm.DB
+}
 
-func New() entity.RepositoryDb {
-	r := repository{}
+func New(db *gorm.DB) entity.RepositoryDb {
+	r := repository{
+		db: db,
+	}
 	return &r
+}
+
+func (r *repository) SaveShortenUrl(ctx context.Context, url *entity.Url) (*entity.Url, error) {
+	dao := &daoUrl{}
+	_ = copier.Copy(&dao, &url)
+	if res := r.db.Save(dao); res.Error != nil {
+		return nil, errors.Wrapf(entity.ErrInternal, res.Error.Error())
+	}
+	return url, nil
 }

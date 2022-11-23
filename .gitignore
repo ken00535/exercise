@@ -7,6 +7,6 @@ config/app-test.yml
 docs/index.yaml
 .DS_Store
 .pgsync.yml
-docker-compose.dev.yml
+docker-compose.yml
 certs/*
 !certs/.gitkeep
