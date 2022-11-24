@@ -36,7 +36,7 @@ func (d *Delivery) ServeShortenUrl(c *gin.Context) {
 		_ = c.Error(err)
 		return
 	}
-	c.Redirect(http.StatusMovedPermanently, url.Url)
+	c.Redirect(http.StatusFound, url.Url)
 }
 
 func (d *Delivery) UploadUrl(c *gin.Context) {

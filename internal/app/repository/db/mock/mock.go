@@ -35,6 +35,21 @@ func (m *MockRepositoryDb) EXPECT() *MockRepositoryDbMockRecorder {
 	return m.recorder
 }
 
+// GetUrl mocks base method.
+func (m *MockRepositoryDb) GetUrl(ctx context.Context, shortenUrl string) (*entity.Url, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUrl", ctx, shortenUrl)
+	ret0, _ := ret[0].(*entity.Url)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUrl indicates an expected call of GetUrl.
+func (mr *MockRepositoryDbMockRecorder) GetUrl(ctx, shortenUrl interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUrl", reflect.TypeOf((*MockRepositoryDb)(nil).GetUrl), ctx, shortenUrl)
+}
+
 // SaveShortenUrl mocks base method.
 func (m *MockRepositoryDb) SaveShortenUrl(ctx context.Context, url *entity.Url) (*entity.Url, error) {
 	m.ctrl.T.Helper()

@@ -46,9 +46,10 @@ func (u *usecase) UploadUrl(ctx context.Context, url string, expireAt time.Time)
 	return shorten, nil
 }
 
-func (u *usecase) GetUrl(ctx context.Context, url string) (*entity.Url, error) {
-	shorten := &entity.Url{
-		Url: "https://google.com",
+func (u *usecase) GetUrl(ctx context.Context, path string) (*entity.Url, error) {
+	url, err := u.db.GetUrl(ctx, path)
+	if err != nil {
+		return nil, err
 	}
-	return shorten, nil
+	return url, nil
 }
