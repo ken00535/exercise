@@ -62,3 +62,4 @@ Query when 1M records
 | Package             |       Time      |
 | :------------------ | :-------------: |
 | db without index    | 63010739 ns/op  |
+| db with index       | 3486737 ns/op   |
