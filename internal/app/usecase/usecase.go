@@ -45,3 +45,10 @@ func (u *usecase) UploadUrl(ctx context.Context, url string, expireAt time.Time)
 	shorten.ShortUrl = u.cfg.Scheme + "://" + u.cfg.Hostname + "/" + shorten.ShortUrl
 	return shorten, nil
 }
+
+func (u *usecase) GetUrl(ctx context.Context, url string) (*entity.Url, error) {
+	shorten := &entity.Url{
+		Url: "https://google.com",
+	}
+	return shorten, nil
+}

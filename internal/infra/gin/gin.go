@@ -42,5 +42,5 @@ func New(cfg Config) *gin.Engine {
 
 // NotFoundHandler responds not found response.
 func NotFoundHandler(c *gin.Context) {
-	c.JSON(http.StatusNotFound, "page not found")
+	c.JSON(http.StatusNotFound, gin.H{"message": "page not found"})
 }

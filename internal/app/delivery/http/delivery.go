@@ -18,14 +18,25 @@ func New(e *gin.Engine, u entity.Usecase) *Delivery {
 	d := &Delivery{
 		usecase: u,
 	}
+	e.Use(ErrorHandler())
 	e.GET("/:url", d.ServeShortenUrl)
 	apiV1 := e.Group("/api/v1")
-	apiV1.Use(ErrorHandler())
 	apiV1.POST("/urls", d.UploadUrl)
 	return d
 }
 
 func (d *Delivery) ServeShortenUrl(c *gin.Context) {
+	source := c.Param("url")
+	if source == "" {
+		_ = c.Error(errors.Wrap(entity.ErrInvalidInput, "no url"))
+		return
+	}
+	url, err := d.usecase.GetUrl(c, source)
+	if err != nil {
+		_ = c.Error(err)
+		return
+	}
+	c.Redirect(http.StatusMovedPermanently, url.Url)
 }
 
 func (d *Delivery) UploadUrl(c *gin.Context) {
