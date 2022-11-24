@@ -14,8 +14,11 @@ init:
 lint:
 	golangci-lint run
 
-fuzz:
+test.fuzz:
 	go test -fuzz=Fuzz -fuzztime 20s ./internal/app/usecase
+
+test.bench:
+	go test -v -bench=. -benchtime=5s ./test/benchmark
 
 docker.up:
 	docker-compose up -d
@@ -34,6 +37,9 @@ db.up:
 
 db.down:
 	source ./.goose.sh && goose -dir deployments/database down
+
+db.mock:
+	source ./.pgenv.sh && psql -f ./test/testdata/mock.sql
 
 mock.update:
 	go generate ./...

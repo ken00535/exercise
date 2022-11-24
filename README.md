@@ -54,3 +54,11 @@ curl -X POST -H "Content-Type:application/json" http://localhost/api/v1/urls -d 
 # Redirect URL API
 curl -L -X GET http://localhost/<url_id> => REDIRECT to original URL
 ```
+
+## Benchmark
+
+Query when 1M records
+
+| Package             |       Time      |
+| :------------------ | :-------------: |
+| db without index    | 63010739 ns/op  |

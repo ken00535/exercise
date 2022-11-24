@@ -7,6 +7,8 @@ import (
 	"time"
 
 	"shorten/internal/app/entity"
+
+	"github.com/pkg/errors"
 )
 
 // Config setting log config
@@ -50,6 +52,9 @@ func (u *usecase) GetUrl(ctx context.Context, path string) (*entity.Url, error) 
 	url, err := u.db.GetUrl(ctx, path)
 	if err != nil {
 		return nil, err
+	}
+	if url.ExpireAt.Before(time.Now()) {
+		return nil, errors.Wrap(entity.ErrResourceNotFound, "over expire time")
 	}
 	return url, nil
 }

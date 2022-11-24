@@ -10,3 +10,4 @@ docs/index.yaml
 docker-compose.yml
 certs/*
 !certs/.gitkeep
+.pgenv.sh
