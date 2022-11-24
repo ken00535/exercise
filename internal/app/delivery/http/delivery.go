@@ -30,7 +30,7 @@ func (d *Delivery) ServeShortenUrl(c *gin.Context) {
 
 func (d *Delivery) UploadUrl(c *gin.Context) {
 	type Body struct {
-		Url      string    `json:"url" binding:"required"`
+		Url      string    `json:"url" binding:"required,url"`
 		ExpireAt time.Time `json:"expireAt" binding:"required"`
 	}
 	req := Body{}

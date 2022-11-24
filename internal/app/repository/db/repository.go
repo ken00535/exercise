@@ -24,8 +24,9 @@ func New(db *gorm.DB) entity.RepositoryDb {
 func (r *repository) SaveShortenUrl(ctx context.Context, url *entity.Url) (*entity.Url, error) {
 	dao := &daoUrl{}
 	_ = copier.Copy(&dao, &url)
-	if res := r.db.Save(dao); res.Error != nil {
+	if res := r.db.Save(&dao); res.Error != nil {
 		return nil, errors.Wrapf(entity.ErrInternal, res.Error.Error())
 	}
+	url.ID = dao.ID
 	return url, nil
 }

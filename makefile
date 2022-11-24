@@ -14,6 +14,9 @@ init:
 lint:
 	golangci-lint run
 
+fuzz:
+	go test -fuzz=Fuzz -fuzztime 20s ./internal/app/usecase
+
 docker.up:
 	docker-compose up -d
 
@@ -31,3 +34,6 @@ db.up:
 
 db.down:
 	source ./.goose.sh && goose -dir deployments/database down
+
+mock.update:
+	go generate ./...

@@ -9,13 +9,21 @@ import (
 	"shorten/internal/app/entity"
 )
 
-type usecase struct {
-	repo entity.RepositoryDb
+// Config setting log config
+type Config struct {
+	Scheme   string `yaml:"scheme" mapstructure:"scheme"`
+	Hostname string `yaml:"hostname" mapstructure:"hostname"`
 }
 
-func New(repo entity.RepositoryDb) entity.Usecase {
+type usecase struct {
+	db  entity.RepositoryDb
+	cfg Config
+}
+
+func New(repo entity.RepositoryDb, cfg Config) entity.Usecase {
 	u := usecase{
-		repo: repo,
+		db:  repo,
+		cfg: cfg,
 	}
 	return &u
 }
@@ -30,9 +38,10 @@ func (u *usecase) UploadUrl(ctx context.Context, url string, expireAt time.Time)
 		ShortUrl: enc[:8],
 		ExpireAt: expireAt,
 	}
-	shorten, err := u.repo.SaveShortenUrl(ctx, shorten)
+	shorten, err := u.db.SaveShortenUrl(ctx, shorten)
 	if err != nil {
 		return nil, err
 	}
+	shorten.ShortUrl = u.cfg.Scheme + "://" + u.cfg.Hostname + "/" + shorten.ShortUrl
 	return shorten, nil
 }

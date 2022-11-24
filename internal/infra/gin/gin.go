@@ -20,11 +20,6 @@ type Config struct {
 	AccessLogIgnoreURLPath []string `yaml:"access_log_ignore_url_path" mapstructure:"access_log_ignore_url_path"`
 }
 
-type SessionConfig struct {
-	Addr string `yaml:"addr" mapstructure:"addr"`
-	Port int    `yaml:"port" mapstructure:"port"`
-}
-
 // New create new engine for handler to register
 func New(cfg Config) *gin.Engine {
 

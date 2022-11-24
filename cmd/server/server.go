@@ -10,7 +10,6 @@ import (
 	"os"
 	"os/signal"
 	"runtime"
-	"strings"
 	"syscall"
 
 	dhttp "shorten/internal/app/delivery/http"
@@ -73,9 +72,8 @@ func main() {
 func startServe(e *gin.Engine, hd *dhttp.Delivery) {
 	go func() {
 		cfg := config.Get()
-		addr := strings.Split(cfg.Http.Address, ":")
 		srv = &http.Server{
-			Addr:     addr[0] + ":80",
+			Addr:     cfg.Http.Address,
 			Handler:  e,
 			ErrorLog: log.New(io.Discard, "", 0),
 		}

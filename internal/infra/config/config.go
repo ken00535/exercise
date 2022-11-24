@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"strings"
 
+	"shorten/internal/app/usecase"
 	"shorten/internal/infra/gin"
 	"shorten/internal/infra/gorm"
 	"shorten/internal/infra/zerolog"
@@ -20,6 +21,7 @@ var (
 // Config is config instance
 type Config struct {
 	fx.Out
+	Us   usecase.Config `yaml:"shorten" mapstructure:"shorten"`
 	Gorm gorm.Config    `yaml:"db" mapstructure:"db"`
 	Http gin.Config     `yaml:"http" mapstructure:"http"`
 	Log  zerolog.Config `yaml:"log" mapstructure:"log"`
