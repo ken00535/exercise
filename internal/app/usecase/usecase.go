@@ -18,11 +18,11 @@ type Config struct {
 }
 
 type usecase struct {
-	db  entity.RepositoryDb
+	db  entity.Repository
 	cfg Config
 }
 
-func New(repo entity.RepositoryDb, cfg Config) entity.Usecase {
+func New(repo entity.Repository, cfg Config) entity.Usecase {
 	u := usecase{
 		db:  repo,
 		cfg: cfg,

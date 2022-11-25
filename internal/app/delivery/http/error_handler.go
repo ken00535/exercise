@@ -49,7 +49,7 @@ func ErrorHandler() gin.HandlerFunc {
 				default:
 					status = http.StatusInternalServerError
 				}
-				log.Err(err).Msgf("%s", err.Error())
+				log.Err(errors.Unwrap(err)).Msgf("%s", err.Error())
 				c.JSON(status, httpErr{Message: appErr.Error()})
 				return
 			}

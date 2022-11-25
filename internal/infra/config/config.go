@@ -7,6 +7,7 @@ import (
 	"shorten/internal/app/usecase"
 	"shorten/internal/infra/gin"
 	"shorten/internal/infra/gorm"
+	"shorten/internal/infra/redis"
 	"shorten/internal/infra/zerolog"
 
 	"github.com/spf13/viper"
@@ -21,10 +22,11 @@ var (
 // Config is config instance
 type Config struct {
 	fx.Out
-	Us   usecase.Config `yaml:"shorten" mapstructure:"shorten"`
-	Gorm gorm.Config    `yaml:"db" mapstructure:"db"`
-	Http gin.Config     `yaml:"http" mapstructure:"http"`
-	Log  zerolog.Config `yaml:"log" mapstructure:"log"`
+	Us    usecase.Config `yaml:"shorten" mapstructure:"shorten"`
+	Redis redis.Config   `yaml:"cache" mapstructure:"cache"`
+	Gorm  gorm.Config    `yaml:"db" mapstructure:"db"`
+	Http  gin.Config     `yaml:"http" mapstructure:"http"`
+	Log   zerolog.Config `yaml:"log" mapstructure:"log"`
 }
 
 // Init config singleton

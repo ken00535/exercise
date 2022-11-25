@@ -18,7 +18,7 @@ test.fuzz:
 	go test -fuzz=Fuzz -fuzztime 20s ./internal/app/usecase
 
 test.bench:
-	go test -v -bench=. -benchtime=5s ./test/benchmark
+	go test -v -bench=. -benchtime=1000x ./test/benchmark
 
 docker.up:
 	docker-compose up -d

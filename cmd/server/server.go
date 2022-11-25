@@ -13,12 +13,17 @@ import (
 	"syscall"
 
 	dhttp "shorten/internal/app/delivery/http"
+	"shorten/internal/app/repository"
+	"shorten/internal/app/repository/cache"
 	"shorten/internal/app/repository/db"
+	"shorten/internal/app/repository/mem"
 	"shorten/internal/app/usecase"
+	"shorten/internal/infra/bigcache"
 	"shorten/internal/infra/config"
 	"shorten/internal/infra/fxlogger"
 	wsgin "shorten/internal/infra/gin"
 	"shorten/internal/infra/gorm"
+	"shorten/internal/infra/redis"
 	wszerolog "shorten/internal/infra/zerolog"
 
 	"github.com/gin-gonic/gin"
@@ -46,8 +51,13 @@ func main() {
 		fx.Supply(cfg),
 		fx.Provide(
 			gorm.New,
+			redis.New,
+			bigcache.New,
 			wsgin.New,
 			db.New,
+			cache.New,
+			mem.New,
+			repository.New,
 			usecase.New,
 			dhttp.New,
 		),
