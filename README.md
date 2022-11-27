@@ -8,9 +8,19 @@ Design and implement (with unit tests) an URL shortener using Go programming lan
 
 A RBDMS guarantees ACID, so I select RDBMS as data persistence. MySQL and Postgres are active, distributed-supported open source sofeware. I choose Postgres because I am more familiar with it.
 
+**redis**
+
+As cache, redis is very similar with memcached. They all have good performace, but redis has more features [[ref](https://aws.amazon.com/tw/elasticache/redis-vs-memcached/)]. In our appliction, a simple cache like memcached is a better choice, but I am not familiar with it. So if consider dev cost, I will select redis.
+
+P.S. if you need scalability, redis's cluster and repliction are important features. So I think redis is a safer option.
+
+**bigcache**
+
+To reduce overhead of redis, a application side cache can be introduced. bigcache has a active repository and support expiration. It also has a good performance benchmark [[ref](https://github.com/allegro/bigcache)]. I think it's a good choice of this project.
+
 **gorm**
 
-I usually use ORM to handle simple model application, because it can avoid sql injection and connection pool issues. shorten url has a very simple model. I think it can work good.
+I usually use ORM to handle simple model application, because it can avoid sql injection and has out-of-the-box features like connection pool. shorten url has a very simple model. I think it can work good.
 
 If want to improve perf, pgx is a option [[ref](https://github.com/efectn/go-orm-benchmarks/blob/master/results.md)]
 
@@ -35,7 +45,7 @@ fx can support many scenarios [[ref1](https://medium.com/@ken00535/%E7%94%A8-fx-
 
 **zerolog**
 
-It's very import to pick a good logger. It need to have some feature
+It's very import to pick a good logger. It need some feature
 
 - high performance (you don't want to waste cpu/mem resources on non-biz place) [[ref](https://github.com/rs/zerolog#benchmarks)]
 - field based (easy to integrate with obervability, like ELK)

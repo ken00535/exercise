@@ -10,8 +10,11 @@ import (
 )
 
 // BodyDump dump request body and response body
-func BodyDump() gin.HandlerFunc {
+func BodyDump(disable bool) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
+		if disable {
+			return
+		}
 		var reqBody strings.Builder
 		var resBody strings.Builder
 		var isSkip bool

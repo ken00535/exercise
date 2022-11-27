@@ -52,22 +52,26 @@ func (r *repository) GetUrl(ctx context.Context, path string) (*entity.Url, erro
 	}
 	url, err = r.cache.GetUrl(ctx, path)
 	if err == nil {
+		_, err = r.mem.SaveShortenUrl(ctx, url)
+		if err != nil {
+			return nil, err
+		}
 		return url, nil
 	}
 	if !errors.Is(err, entity.ErrResourceNotFound) {
 		return nil, err
 	}
 	url, err = r.db.GetUrl(ctx, path)
-	if err != nil {
-		return nil, err
+	if err == nil {
+		_, err = r.cache.SaveShortenUrl(ctx, url)
+		if err != nil {
+			return nil, err
+		}
+		_, err = r.mem.SaveShortenUrl(ctx, url)
+		if err != nil {
+			return nil, err
+		}
+		return url, nil
 	}
-	_, err = r.cache.SaveShortenUrl(ctx, url)
-	if err != nil {
-		return nil, err
-	}
-	_, err = r.mem.SaveShortenUrl(ctx, url)
-	if err != nil {
-		return nil, err
-	}
-	return url, nil
+	return nil, err
 }

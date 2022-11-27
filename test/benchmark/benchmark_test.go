@@ -31,7 +31,7 @@ func BenchmarkRequestParallel(b *testing.B) {
 		for {
 			select {
 			case <-ticker.C:
-				fmt.Printf("ts: %v, wip: %d, cnt:%d \n",
+				fmt.Printf("ts: %v, wip: %d, cnt: %d \n",
 					time.Now().Sub(start),
 					atomic.LoadInt32(&wip),
 					atomic.LoadInt32(&cnt),

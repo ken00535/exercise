@@ -1,6 +1,7 @@
 package http
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -36,6 +37,8 @@ func (d *Delivery) ServeShortenUrl(c *gin.Context) {
 		_ = c.Error(err)
 		return
 	}
+	expirePeriod := url.ExpireAt.Sub(time.Now())
+	c.Header("Cache-Control", fmt.Sprintf("public, max-age=%d", int(expirePeriod.Seconds())))
 	c.Redirect(http.StatusFound, url.Url)
 }
 

@@ -8,26 +8,31 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func AccessLog(c *gin.Context) {
-	t := time.Now()
+func AccessLog(disable bool) func(ctx *gin.Context) {
+	return func(c *gin.Context) {
+		if disable {
+			return
+		}
+		t := time.Now()
 
-	c.Next()
+		c.Next()
 
-	if strings.Contains(c.Request.URL.Path, "docs") {
-		return
+		if strings.Contains(c.Request.URL.Path, "docs") {
+			return
+		}
+
+		req := c.Request
+		latency := time.Since(t)
+		logger := log.With().
+			Str("method", req.Method).
+			Str("uri", req.RequestURI).
+			Str("latency", latency.String()).
+			Str("ip", req.Host).
+			Int("status", c.Writer.Status()).Logger()
+		if len(c.Errors) != 0 {
+			logger.Error().Msgf("http access log: %v", req.RequestURI)
+			return
+		}
+		logger.Info().Msgf("http access log: %v", req.RequestURI)
 	}
-
-	req := c.Request
-	latency := time.Since(t)
-	logger := log.With().
-		Str("method", req.Method).
-		Str("uri", req.RequestURI).
-		Str("latency", latency.String()).
-		Str("ip", req.Host).
-		Int("status", c.Writer.Status()).Logger()
-	if len(c.Errors) != 0 {
-		logger.Error().Msgf("http access log: %v", req.RequestURI)
-		return
-	}
-	logger.Info().Msgf("http access log: %v", req.RequestURI)
 }

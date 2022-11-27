@@ -20,9 +20,9 @@ type Config struct {
 	Username     string `yaml:"username" mapstructure:"username"`
 	Password     string `yaml:"password" mapstructure:"password"`
 	Database     int    `yaml:"database" mapstructure:"database"`
-	ReadTimeout  int    `yaml:"readtimeout" mapstructure:"readtimeout"`   // base on second
-	WriteTimeout int    `yaml:"writetimeout" mapstructure:"writetimeout"` // base on second
-	TLSDisable   bool   `yaml:"tlsdisable" mapstructure:"tlsdisable"`
+	ReadTimeout  int    `yaml:"read_timeout" mapstructure:"read_timeout"`   // base on second
+	WriteTimeout int    `yaml:"writ_etimeout" mapstructure:"writ_etimeout"` // base on second
+	TLSDisable   bool   `yaml:"tls_disable" mapstructure:"tls_disable"`
 }
 
 func New(lc fx.Lifecycle, cfg Config) (*redis.Client, error) {
