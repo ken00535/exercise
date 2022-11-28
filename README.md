@@ -91,6 +91,14 @@ run application
 make
 ```
 
+### Configurations
+
+if you want to change config, modify .env, for example, if you cannot bind localhost:80 because it has already been used. you can change port by
+
+```bash
+HTTP_ADDRESS=localhost:8080
+```
+
 ## Requirement
 
 1. URL shortener has 2 APIs, please follow API example to implement:
@@ -122,9 +130,10 @@ curl -L -X GET http://localhost/<url_id> => REDIRECT to original URL
 
 ## Benchmark
 
-Query when 1M records
+Query when 1M records, 1000 request, 8 * 10 parallelism
 
-| Package             |       Time      |
-| :------------------ | :-------------: |
-| db without index    | 63010739 ns/op  |
-| db with index       | 3486737 ns/op   |
+| Condition          | First Request Time  | Average Request Time | Total Request Time |
+| :----------------- | :------------------ | :------------------- | :----------------- |
+| with in-mem cache  | 1.7958ms            | 7.690019ms           | 101.4543ms         |
+| with redis         | 2.8669ms            | 19.838704ms          | 265.588ms          |
+| with db            | 7.4707ms            | 47.293974ms          | 636.6751ms         |
