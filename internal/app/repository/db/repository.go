@@ -35,7 +35,7 @@ func (r *repository) SaveShortenUrl(ctx context.Context, url *entity.Url) (*enti
 		Save(&dao); res.Error != nil {
 		return nil, errors.Wrapf(entity.ErrInternal, res.Error.Error())
 	}
-	url.ID = dao.ID
+	url.ID = dao.ShortUrl
 	return url, nil
 }
 

@@ -3,7 +3,7 @@ package entity
 import "time"
 
 type Url struct {
-	ID       int64
+	ID       string
 	Url      string
 	ShortUrl string
 	ExpireAt time.Time

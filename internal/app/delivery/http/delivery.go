@@ -61,7 +61,7 @@ func (d *Delivery) UploadUrl(c *gin.Context) {
 		return
 	}
 	type Response struct {
-		ID       int64  `json:"id"`
+		ID       string `json:"id"`
 		ShortUrl string `json:"shortUrl"`
 	}
 	c.JSON(http.StatusOK, Response{

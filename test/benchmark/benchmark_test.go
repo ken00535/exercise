@@ -61,7 +61,7 @@ func BenchmarkRequestParallel(b *testing.B) {
 		for pb.Next() {
 			start := time.Now()
 			atomic.AddInt32(&wip, 1)
-			res, _ := client.Get("http://192.168.0.32/XfsdKLfa")
+			res, _ := client.Get("http://localhost/XfsdKLfa")
 			atomic.AddInt32(&wip, -1)
 			if atomic.AddInt32(&cnt, 1) == 1 {
 				firstCh <- 1
