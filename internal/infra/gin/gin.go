@@ -20,6 +20,9 @@ type Config struct {
 	BodyDumpIgnoreURLPath  []string `yaml:"body_dump_ignore_url_path" mapstructure:"body_dump_ignore_url_path"`
 	CORSAllowOrigins       []string `yaml:"cors_allow_origins" mapstructure:"cors_allow_origins"`
 	AccessLogIgnoreURLPath []string `yaml:"access_log_ignore_url_path" mapstructure:"access_log_ignore_url_path"`
+	LimiterRate            int      `yaml:"limiter_rate" mapstructure:"limiter_rate"` // ms
+	LimiterBucket          int      `yaml:"limiter_bucket" mapstructure:"limiter_bucket"`
+	LimiterTimeout         int      `yaml:"limiter_timeout" mapstructure:"limiter_timeout"` // ms
 }
 
 // New create new engine for handler to register
@@ -42,6 +45,7 @@ func New(cfg Config) *gin.Engine {
 	e.Use(middleware.AccessLog(cfg.DisableAccessLog))
 	e.Use(middleware.BodyDump(cfg.DisableBodyDump))
 	e.Use(middleware.Recovery())
+	e.Use(middleware.RateLimiter(cfg.LimiterRate, cfg.LimiterBucket, cfg.LimiterTimeout))
 	return e
 }
 

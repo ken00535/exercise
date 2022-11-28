@@ -12,7 +12,7 @@ init:
 	@cp ./config/app-dev.yml ./config/app.yml
 
 lint:
-	golangci-lint run
+	golangci-lint run --fix
 
 test.fuzz:
 	go test -fuzz=Fuzz -fuzztime 20s ./internal/app/usecase

@@ -42,7 +42,7 @@ func (r *repository) GetUrl(ctx context.Context, path string) (*entity.Url, erro
 		return nil, errors.Wrapf(entity.ErrInternal, err.Error())
 	}
 	url := &entity.Url{}
-	if err := json.Unmarshal([]byte(res), &url); err != nil {
+	if err := json.Unmarshal(res, &url); err != nil {
 		return nil, errors.Wrapf(entity.ErrInternal, err.Error())
 	}
 	return url, nil

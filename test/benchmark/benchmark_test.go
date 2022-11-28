@@ -8,6 +8,8 @@ import (
 	"sync/atomic"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func BenchmarkRequestParallel(b *testing.B) {
@@ -59,13 +61,14 @@ func BenchmarkRequestParallel(b *testing.B) {
 		for pb.Next() {
 			start := time.Now()
 			atomic.AddInt32(&wip, 1)
-			client.Get("http://192.168.0.32/qiI5wXYJ")
+			res, _ := client.Get("http://192.168.0.32/XfsdKLfa")
 			atomic.AddInt32(&wip, -1)
 			if atomic.AddInt32(&cnt, 1) == 1 {
 				firstCh <- 1
 			}
 			period := time.Now().Sub(start)
 			periodCh <- period
+			assert.Equal(b, http.StatusFound, res.StatusCode)
 		}
 	})
 	cancel()
