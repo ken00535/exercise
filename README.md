@@ -60,7 +60,9 @@ please check your environment already have
 
 - go: 1.18
 - docker
-- 
+- make
+
+and recommend unix-like environment 
 
 ### Steps
 
@@ -73,6 +75,7 @@ make docker.up
 update db schema
 
 ```bash
+go install github.com/pressly/goose/v3/cmd/goose@latest
 make db.up
 ```
 
