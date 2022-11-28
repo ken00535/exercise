@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"shorten/internal/app/entity"
+	"shorten/internal/infra/clock"
 
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
@@ -13,11 +14,13 @@ import (
 
 type Delivery struct {
 	usecase entity.Usecase
+	clock   clock.Clock
 }
 
 func New(e *gin.Engine, u entity.Usecase) *Delivery {
 	d := &Delivery{
 		usecase: u,
+		clock:   clock.Real{},
 	}
 	e.Use(ErrorHandler())
 	e.GET("/:url", d.ServeShortenUrl)
@@ -37,7 +40,7 @@ func (d *Delivery) ServeShortenUrl(c *gin.Context) {
 		_ = c.Error(err)
 		return
 	}
-	expirePeriod := url.ExpireAt.Sub(time.Now())
+	expirePeriod := url.ExpireAt.Sub(d.clock.Now())
 	c.Header("Cache-Control", fmt.Sprintf("public, max-age=%d", int(expirePeriod.Seconds())))
 	c.Redirect(http.StatusFound, url.Url)
 }

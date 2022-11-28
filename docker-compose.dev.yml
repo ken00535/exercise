@@ -1,13 +1,15 @@
 version: "3"
 services:
-  # shorten:
-  #   container_name: "shorten"
-  #   image: "shorten"
-  #   build: .
-  #   ports:
-  #     - 80:80
   postgres:
     container_name: "postgres"
-    image: "postgres:15.1"
+    image: "postgres:13.9"
     ports:
       - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+  redis:
+    container_name: "redis"
+    image: "redis:7.0.5"
+    ports:
+      - 6379:6379

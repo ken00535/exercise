@@ -1,4 +1,4 @@
-//go:generate mockgen -source ../../entity/repository_db.go -destination mock/mock.go -package mock
+//go:generate mockgen -source ../entity/repository.go -destination mock/mock.go -package mock
 package repository
 
 import (

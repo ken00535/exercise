@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"shorten/internal/app/entity"
-	"shorten/internal/app/repository/db/mock"
+	"shorten/internal/app/repository/mock"
 
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
@@ -17,12 +17,12 @@ import (
 type UsecaseTestSuite struct {
 	suite.Suite
 	us     *usecase
-	mockDb *mock.MockRepositoryDb
+	mockDb *mock.MockRepository
 }
 
 func (suite *UsecaseTestSuite) SetupTest() {
 	ctrl := gomock.NewController(suite.T())
-	suite.mockDb = mock.NewMockRepositoryDb(ctrl)
+	suite.mockDb = mock.NewMockRepository(ctrl)
 	suite.us = &usecase{
 		db: suite.mockDb,
 		cfg: Config{
@@ -35,11 +35,11 @@ func (suite *UsecaseTestSuite) SetupTest() {
 func (suite *UsecaseTestSuite) TearDownTest() {
 }
 
-func TestWithdrawTestSuite(t *testing.T) {
+func TestUrlTestSuite(t *testing.T) {
 	suite.Run(t, new(UsecaseTestSuite))
 }
 
-func (suite *UsecaseTestSuite) TestCreateWithdrawal() {
+func (suite *UsecaseTestSuite) TestUploadUrl() {
 	suite.Run("success", func() {
 		type TC struct {
 			Param1 string
@@ -77,7 +77,7 @@ func FuzzUploadUrl(f *testing.F) {
 	}
 	f.Fuzz(func(t *testing.T, source string) {
 		ctrl := gomock.NewController(t)
-		mockDb := mock.NewMockRepositoryDb(ctrl)
+		mockDb := mock.NewMockRepository(ctrl)
 		u.db = mockDb
 
 		mockDb.EXPECT().
